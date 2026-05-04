@@ -27,3 +27,8 @@ Project Goals:
 
 TODO:
 - Implement the rest of the tech stack
+- Prototype the essentials:
+  - Test scene
+  - Camera view
+  - Player Movement
+  - Custom gameplay mechanics
