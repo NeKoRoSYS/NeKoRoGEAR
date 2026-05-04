@@ -7,9 +7,11 @@ Renderer::Renderer(Window& window) {
     if (!gladLoadGLLoader((GLADloadproc)window.GetProcAddress())) {
         throw std::runtime_error("Failed to initialize GLAD");
     }
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Renderer::Clear() {
     glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

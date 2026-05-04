@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Engine/ECS/ECS.h"
 #include "Engine/Events/EventBus.h"
 #include "Engine/Rendering/Window.h"
 #include "Engine/Rendering/Renderer.h"
@@ -11,6 +12,7 @@ class Application {
         ~Application();
         void Run();
     private:
+        Registry registry;
         EventBus eventBus;
         Window window;
         Renderer renderer;

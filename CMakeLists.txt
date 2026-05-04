@@ -47,8 +47,7 @@ target_include_directories(NeKoRoGINE PRIVATE
     vendor/imgui
     ${SDL3_INCLUDE_DIR}
     ${GLAD_INCLUDE_DIR}
-    ${GLM_INCLUDE_DIR}
-    ${STB_IMAGE_INCLUDE}
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor"
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
 )
 
