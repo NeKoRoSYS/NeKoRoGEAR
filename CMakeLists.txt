@@ -16,6 +16,12 @@ set(GLAD_DIR ${CMAKE_SOURCE_DIR}/vendor/glad)
 set(GLAD_INCLUDE_DIR ${GLAD_DIR}/include)
 set(GLAD_SOURCE ${GLAD_DIR}/src/glad.c)
 
+set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/vendor/glm)
+
+set(STB_DIR ${CMAKE_SOURCE_DIR}/vendor/stb)
+set(STB_IMAGE_INCLUDE ${GLAD_DIR}/stb_image.h)
+set(STB_IMAGE_SOURCE ${STB_DIR}/stb_image.cpp)
+
 set(IMGUI_SOURCES
     vendor/imgui/imgui.cpp
     vendor/imgui/imgui_demo.cpp
@@ -26,13 +32,13 @@ set(IMGUI_SOURCES
     vendor/imgui/imgui_impl_opengl3.cpp
 )
 
-
 file(GLOB_RECURSE ENGINE_GLOB "src/*.cpp" "src/*.h")
 set(ENGINE_SOURCES
     src/Engine/main.cpp
     ${ENGINE_GLOB}
     ${GLAD_SOURCE}
     ${IMGUI_SOURCES}
+    ${STB_IMAGE_SOURCE}
 )
 
 add_executable(NeKoRoGINE ${ENGINE_SOURCES} )
@@ -41,6 +47,8 @@ target_include_directories(NeKoRoGINE PRIVATE
     vendor/imgui
     ${SDL3_INCLUDE_DIR}
     ${GLAD_INCLUDE_DIR}
+    ${GLM_INCLUDE_DIR}
+    ${STB_IMAGE_INCLUDE}
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
 )
 

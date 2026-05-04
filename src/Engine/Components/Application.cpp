@@ -1,12 +1,13 @@
 #include "Application.h"
+#include "Engine/Rendering/Window.h"
 #include "Engine/Rendering/Renderer.h"
 #include "Engine/Events/Events.h"
 #include <SDL3/SDL.h>
 #include <glad/glad.h>
 #include <iostream>
 
-Application::Application() {
-    debugMenu.Init(renderer.window, renderer.glContext);
+Application::Application() : window("NeKoRoGINE", 1280, 720), renderer(window) { 
+    debugMenu.Init(window.window, window.glContext);
 }
 
 Application::~Application() {
@@ -40,28 +41,32 @@ void Application::Run() {
         debugMenu.Draw(renderer.clearColor);
         debugMenu.End();
         debugMenu.RenderDrawData();
-        renderer.Swap();
+        window.Swap();
     }
 }
 
 void Application::HandleEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        debugMenu.ProcessEvent(&event);
-        if (debugMenu.pointerCaptured) continue;
+        debugMenu.pointerCaptured = false; 
         
+        debugMenu.ProcessEvent(&event);
+        
+        if (event.type == SDL_EVENT_QUIT) {
+            eventBus.Push(WindowCloseEvent{});
+            continue; 
+        }
+
+        if (debugMenu.pointerCaptured) continue;
+                 
         switch (event.type) {
-            case SDL_EVENT_QUIT:
-                eventBus.Push(WindowCloseEvent{});
-                break;
-                
             case SDL_EVENT_WINDOW_RESIZED:
                 eventBus.Push(WindowResizeEvent{
                     event.window.data1, 
                     event.window.data2
                 });
                 break;
-                
+                             
             case SDL_EVENT_KEY_DOWN:
                 eventBus.Push(KeyPressEvent{
                     event.key.key, 

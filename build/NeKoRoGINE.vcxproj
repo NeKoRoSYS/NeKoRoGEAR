@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -102,10 +102,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -140,7 +140,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -156,10 +156,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -194,7 +194,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -210,10 +210,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -248,7 +248,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -263,10 +263,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Dev\NeKoRoGINE\vendor\imgui;D:\Dev\NeKoRoGINE\vendor\SDL3\include;D:\Dev\NeKoRoGINE\vendor\glad\include;D:\Dev\NeKoRoGINE\vendor\glm;D:\Dev\NeKoRoGINE\vendor\glad\stb_image.h;D:\Dev\NeKoRoGINE\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -364,8 +364,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Components\DebugMenu.h" />
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Events\EventBus.h" />
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Events\Events.h" />
+    <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Mesh.cpp" />
+    <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Mesh.h" />
     <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Renderer.cpp" />
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Renderer.h" />
+    <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Shader.cpp" />
+    <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Shader.h" />
     <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Window.cpp" />
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Window.h" />
     <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\glad\src\glad.c" />
@@ -376,6 +380,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\imgui\imgui_impl_sdl3.cpp" />
     <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\stb\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\Dev\NeKoRoGINE\build\ZERO_CHECK.vcxproj">

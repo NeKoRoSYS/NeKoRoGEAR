@@ -1,7 +1,9 @@
 D:\Dev\NeKoRoGINE\src\Engine\main.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\main.obj
 D:\Dev\NeKoRoGINE\src\Engine\Components\Application.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\Application.obj
 D:\Dev\NeKoRoGINE\src\Engine\Components\DebugMenu.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\DebugMenu.obj
+D:\Dev\NeKoRoGINE\src\Engine\Rendering\Mesh.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\Mesh.obj
 D:\Dev\NeKoRoGINE\src\Engine\Rendering\Renderer.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\Renderer.obj
+D:\Dev\NeKoRoGINE\src\Engine\Rendering\Shader.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\Shader.obj
 D:\Dev\NeKoRoGINE\src\Engine\Rendering\Window.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\Window.obj
 D:\Dev\NeKoRoGINE\vendor\glad\src\glad.c;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\glad.obj
 D:\Dev\NeKoRoGINE\vendor\imgui\imgui.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\imgui.obj
@@ -11,3 +13,4 @@ D:\Dev\NeKoRoGINE\vendor\imgui\imgui_tables.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGI
 D:\Dev\NeKoRoGINE\vendor\imgui\imgui_widgets.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\imgui_widgets.obj
 D:\Dev\NeKoRoGINE\vendor\imgui\imgui_impl_sdl3.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\imgui_impl_sdl3.obj
 D:\Dev\NeKoRoGINE\vendor\imgui\imgui_impl_opengl3.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\imgui_impl_opengl3.obj
+D:\Dev\NeKoRoGINE\vendor\stb\stb_image.cpp;D:\Dev\NeKoRoGINE\build\NeKoRoGINE.dir\Debug\stb_image.obj

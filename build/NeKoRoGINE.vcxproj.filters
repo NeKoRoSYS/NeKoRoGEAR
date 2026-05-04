@@ -10,7 +10,13 @@
     <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Components\DebugMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Window.cpp">
@@ -40,6 +46,9 @@
     <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\imgui\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\Dev\NeKoRoGINE\vendor\stb\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Components\Application.h">
@@ -54,7 +63,13 @@
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Events\Events.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\Dev\NeKoRoGINE\src\Engine\Rendering\Window.h">

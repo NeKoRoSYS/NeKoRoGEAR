@@ -1,29 +1,8 @@
 ================================================================================
 Linker Errors
-Generated: 2026-05-04T06:52:31.233Z
-Total Errors: 8
+Generated: 2026-05-04T12:32:20.210Z
+Total Errors: 1
 ================================================================================
 
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::Init(struct SDL_Window *,struct SDL_GLContextState *)" (?Init@DebugMenu@@QEAAXPEAUSDL_Window@@PEAUSDL_GLContextState@@@Z) referenced in function "public: __cdecl Application::Application(void)" (??0Application@@QEAA@XZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::Shutdown(void)" (?Shutdown@DebugMenu@@QEAAXXZ) referenced in function "public: __cdecl Application::~Application(void)" (??1Application@@QEAA@XZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::Begin(void)" (?Begin@DebugMenu@@QEAAXXZ) referenced in function "public: void __cdecl Application::Run(void)" (?Run@Application@@QEAAXXZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::End(void)" (?End@DebugMenu@@QEAAXXZ) referenced in function "public: void __cdecl Application::Run(void)" (?Run@Application@@QEAAXXZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::Draw(float *)" (?Draw@DebugMenu@@QEAAXPEAM@Z) referenced in function "public: void __cdecl Application::Run(void)" (?Run@Application@@QEAAXXZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::ProcessEvent(union SDL_Event *)" (?ProcessEvent@DebugMenu@@QEAAXPEATSDL_Event@@@Z) referenced in function "private: void __cdecl Application::HandleEvents(void)" (?HandleEvents@Application@@AEAAXXZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK2019] (MSVC)
-unresolved external symbol "public: void __cdecl DebugMenu::RenderDrawData(void)" (?RenderDrawData@DebugMenu@@QEAAXXZ) referenced in function "private: void __cdecl Application::Render(void)" (?Render@Application@@AEAAXXZ) [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
-
-[LNK1120] (MSVC)
-7 unresolved externals [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
+[LNK1168] (MSVC)
+cannot open D:\Dev\NeKoRoGINE\bin\Debug\NeKoRoGINE.exe for writing [D:\Dev\NeKoRoGINE\build\NeKoRoGINE.vcxproj]
