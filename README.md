@@ -16,6 +16,20 @@ The very foundation of the engine. As much as I want to reinvent the wheel to fu
 - GLM for math calculations
 - miniaudio/FMOD for sounds
 <br>
+`
+src
+├── Engine
+     ├── Assets
+     ├── ECS
+     ├── 
+     ├──
+     ├── Rendering
+├── CSharp
+     └── WIP
+└── Game
+     └── WIP
+`
+<br>
 
 ## Custom Features
 These are the systems and features of my engine that are quite specific and I deem to be worth manually making on top of the core. It's what makes NeKoRoGINE somewhat its own thing! :D
