@@ -4,7 +4,7 @@ A generic game engine I made as a hobby and is by no means production-ready! Fee
 <br>
 
 ## Core Tech Stack
-The very foundation of the engine. As much as I want to reinvent the wheel to further deepen my understanding about the inner workings of game engines, I settled for established libraries when making the core of the engine.
+The very foundation of the engine. As much as I want to reinvent the wheel to further deepen my understanding about the inner workings of game engines, I settled with using established libraries when making the core of the engine.
 - C++ as main programming language
 - C# for client and gameplay logic
 - CMake for build automation
