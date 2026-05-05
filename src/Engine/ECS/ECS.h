@@ -6,10 +6,28 @@
 #include <memory>
 #include <queue>
 #include <cassert>
+#include <array> 
+#include <bitset>
+#include <algorithm>
 
 // 1. Core Type Definitions
 using Entity = uint32_t;
 const Entity MAX_ENTITIES = 5000;
+
+const uint32_t MAX_COMPONENTS = 32;
+using ComponentTypeID = uint32_t;
+using Signature = std::bitset<MAX_COMPONENTS>;
+
+inline ComponentTypeID GetUniqueComponentID() {
+    static ComponentTypeID lastID = 0;
+    return lastID++;
+}
+
+template <typename T>
+inline ComponentTypeID GetComponentTypeID() {
+    static ComponentTypeID typeID = GetUniqueComponentID();
+    return typeID;
+}
 
 // 2. The Component Array Interface
 // We need a non-templated base class so the Registry can store a list of them
@@ -26,23 +44,22 @@ private:
     // The tightly packed continuous memory containing actual component data
     std::vector<T> componentArray;
 
-    // Maps an Entity ID to its position in the componentArray
-    std::unordered_map<Entity, size_t> entityToIndexMap;
-
-    // Maps an index in the componentArray back to its Entity ID
-    std::unordered_map<size_t, Entity> indexToEntityMap;
+    // Initialize with -1 (or max size_t) to represent "no component"
+    std::array<size_t, MAX_ENTITIES> entityToIndexArray; 
+    std::array<Entity, MAX_ENTITIES> indexToEntityArray;
 
     size_t validSize = 0; // How many valid components are in the array
 
 public:
+    ComponentArray() {
+        entityToIndexArray.fill(-1);
+    }
+
     void InsertData(Entity entity, T component) {
-        assert(entityToIndexMap.find(entity) == entityToIndexMap.end() && "Component added to same entity more than once.");
-
-        // Put new component at the end of the packed array
         size_t newIndex = validSize;
-        entityToIndexMap[entity] = newIndex;
-        indexToEntityMap[newIndex] = entity;
-
+        entityToIndexArray[entity] = newIndex;
+        indexToEntityArray[newIndex] = entity;
+        
         if (newIndex >= componentArray.size()) {
             componentArray.push_back(component);
         } else {
@@ -52,39 +69,40 @@ public:
     }
 
     void RemoveData(Entity entity) {
-        assert(entityToIndexMap.find(entity) != entityToIndexMap.end() && "Removing non-existent component.");
-
-        // SWAP AND POP (The magic of DOD)
-        // To keep the array packed, we move the LAST element into the deleted element's spot
-        size_t indexOfRemovedEntity = entityToIndexMap[entity];
+        size_t indexOfRemovedEntity = entityToIndexArray[entity];
         size_t indexOfLastElement = validSize - 1;
         
         componentArray[indexOfRemovedEntity] = componentArray[indexOfLastElement];
-
-        // Update the maps to point to the moved element
-        Entity entityOfLastElement = indexToEntityMap[indexOfLastElement];
-        entityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
-        indexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
-
-        entityToIndexMap.erase(entity);
-        indexToEntityMap.erase(indexOfLastElement);
+        
+        Entity entityOfLastElement = indexToEntityArray[indexOfLastElement];
+        entityToIndexArray[entityOfLastElement] = indexOfRemovedEntity;
+        indexToEntityArray[indexOfRemovedEntity] = entityOfLastElement;
+        
+        entityToIndexArray[entity] = -1; 
         validSize--;
     }
 
     T& GetData(Entity entity) {
-        assert(entityToIndexMap.find(entity) != entityToIndexMap.end() && "Retrieving non-existent component.");
-        return componentArray[entityToIndexMap[entity]];
+        return componentArray[entityToIndexArray[entity]];
     }
 
     std::vector<T>& GetPackedArray() { return componentArray; }
-    std::unordered_map<size_t, Entity>& GetIndexToEntityMap() { return indexToEntityMap; }
-    size_t GetValidSize() { return validSize; }
 
+    std::array<Entity, MAX_ENTITIES>& GetIndexToEntityArray() { return indexToEntityArray; }
+    
+    size_t GetValidSize() { return validSize; }
+    
     void EntityDestroyed(Entity entity) override {
-        if (entityToIndexMap.find(entity) != entityToIndexMap.end()) {
+        if (entityToIndexArray[entity] != (size_t)-1) {
             RemoveData(entity);
         }
     }
+};
+
+class System {
+public:
+    std::vector<Entity> entities;
+    Signature signature;
 };
 
 // 4. The Registry (The Engine's Central Nervous System)
@@ -93,21 +111,23 @@ private:
     std::queue<Entity> availableEntities;
     uint32_t livingEntityCount = 0;
 
-    // Stores all our different ComponentArrays
-    std::unordered_map<std::type_index, std::shared_ptr<IComponentArray>> componentArrays;
+    std::array<std::shared_ptr<IComponentArray>, MAX_COMPONENTS> componentArrays;
+
+    std::array<Signature, MAX_ENTITIES> entitySignatures;
+    std::unordered_map<std::type_index, std::shared_ptr<System>> systems;
 
 public:
     Registry() {
         for (Entity i = 0; i < MAX_ENTITIES; ++i) {
             availableEntities.push(i);
+            entitySignatures[i].reset();
         }
     }
     
     template<typename T>
     std::shared_ptr<ComponentArray<T>> GetComponentArray() {
-        std::type_index typeName = std::type_index(typeid(T));
-        assert(componentArrays.find(typeName) != componentArrays.end() && "Component not registered before use.");
-        return std::static_pointer_cast<ComponentArray<T>>(componentArrays[typeName]);
+        ComponentTypeID typeId = GetComponentTypeID<T>();
+        return std::static_pointer_cast<ComponentArray<T>>(componentArrays[typeId]);
     }
 
     Entity CreateEntity() {
@@ -119,34 +139,83 @@ public:
     }
 
     void DestroyEntity(Entity entity) {
-        // Tell all component arrays that this entity died so they can clean up their data
         for (auto const& pair : componentArrays) {
-            auto const& componentArray = pair.second;
-            componentArray->EntityDestroyed(entity);
+            if (pair) pair->EntityDestroyed(entity);
         }
+        
+        entitySignatures[entity].reset();
+        EntitySignatureChanged(entity, entitySignatures[entity]);
+        
         availableEntities.push(entity);
         livingEntityCount--;
     }
 
     template <typename T>
     void RegisterComponent() {
-        std::type_index typeName = std::type_index(typeid(T));
-        assert(componentArrays.find(typeName) == componentArrays.end() && "Registering component type more than once.");
-        componentArrays[typeName] = std::make_shared<ComponentArray<T>>();
+        ComponentTypeID typeId = GetComponentTypeID<T>();
+        componentArrays[typeId] = std::make_shared<ComponentArray<T>>();
     }
 
     template <typename T>
     void AddComponent(Entity entity, T component) {
         GetComponentArray<T>()->InsertData(entity, component);
+        
+        ComponentTypeID typeId = GetComponentTypeID<T>();
+        entitySignatures[entity].set(typeId);
+        
+        EntitySignatureChanged(entity, entitySignatures[entity]);
     }
 
     template <typename T>
     void RemoveComponent(Entity entity) {
         GetComponentArray<T>()->RemoveData(entity);
+        
+        ComponentTypeID typeId = GetComponentTypeID<T>();
+        entitySignatures[entity].reset(typeId);
+        
+        EntitySignatureChanged(entity, entitySignatures[entity]);
     }
 
     template <typename T>
     T& GetComponent(Entity entity) {
         return GetComponentArray<T>()->GetData(entity);
+    }
+
+    template <typename T>
+    std::shared_ptr<T> RegisterSystem() {
+        std::type_index typeName = std::type_index(typeid(T));
+        assert(systems.find(typeName) == systems.end() && "Registering system more than once.");
+        
+        auto system = std::make_shared<T>();
+        systems[typeName] = system;
+        return system;
+    }
+
+    template <typename T>
+    void SetSystemSignature(Signature signature) {
+        std::type_index typeName = std::type_index(typeid(T));
+        assert(systems.find(typeName) != systems.end() && "System used before registered.");
+        systems[typeName]->signature = signature;
+    }
+
+private:
+    void EntitySignatureChanged(Entity entity, Signature entitySignature) {
+        for (auto const& pair : systems) {
+            auto const& type = pair.first;
+            auto const& system = pair.second;
+            auto const& systemSignature = system->signature;
+
+            bool matches = (entitySignature & systemSignature) == systemSignature;
+            
+            auto it = std::find(system->entities.begin(), system->entities.end(), entity);
+            bool isAlreadyInSystem = it != system->entities.end();
+
+            if (matches && !isAlreadyInSystem) {
+                system->entities.push_back(entity);
+            } else if (!matches && isAlreadyInSystem) {
+                *it = system->entities.back();
+                system->entities.pop_back();
+            }
+        }
     }
 };

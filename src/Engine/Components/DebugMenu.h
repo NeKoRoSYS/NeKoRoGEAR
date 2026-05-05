@@ -6,6 +6,7 @@
 class DebugMenu {
     public:
         bool pointerCaptured;
+        bool spinObject;
         void Init(SDL_Window* window, SDL_GLContext glContext);
         void Shutdown();
         void Begin();

@@ -1,5 +1,6 @@
 #include <imgui.h>
 #include "Application.h"
+#include "Engine/Assets/ModelLoader.h"
 #include "Engine/Rendering/Window.h"
 #include "Engine/Rendering/Renderer.h"
 #include "Engine/Events/Events.h"
@@ -26,58 +27,33 @@ Application::~Application() {
 #include "Engine/Rendering/Shader.h"
 #include <vector>
 
-struct Vertex {
-    float position[3];
-    float normal[3];
-    float texCoords[2];
-};
-
-std::unique_ptr<VertexArray> CreateTestCube() {
-    std::vector<Vertex> vertices = {
-        {{-0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-        {{ 0.5f, -0.5f,  0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
-        {{ 0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
-        {{-0.5f,  0.5f,  0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
-        {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}},
-        {{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}},
-        {{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}},
-        {{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}}
-    };
-
-    std::vector<unsigned int> indices = {
-        0, 1, 2, 2, 3, 0,
-        1, 5, 6, 6, 2, 1,
-        7, 6, 5, 5, 4, 7,
-        4, 0, 3, 3, 7, 4,
-        4, 5, 1, 1, 0, 4,
-        3, 2, 6, 6, 7, 3 
-    };
-
-    auto vertexArray = VertexArray::Create();
-
-    auto vertexBuffer = VertexBuffer::Create(
-        (float*)vertices.data(), 
-        vertices.size() * sizeof(Vertex)
-    );
-    vertexArray->AddVertexBuffer(std::move(vertexBuffer));
-
-    auto indexBuffer = IndexBuffer::Create(
-        indices.data(), 
-        indices.size()
-    );
-    vertexArray->SetIndexBuffer(std::move(indexBuffer));
-
-    return vertexArray;
-}
-
 void Application::Run() {
     isRunning = true;
-
     Registry registry;
+
     registry.RegisterComponent<TransformComponent>();
     registry.RegisterComponent<CameraComponent>();
-
     registry.RegisterComponent<RenderComponent>();
+
+    auto renderSystem = registry.RegisterSystem<RenderSystem>();
+    auto transformSystem = registry.RegisterSystem<TransformSystem>();
+    auto cameraSystem = registry.RegisterSystem<CameraSystem>();
+    auto cameraControllerSystem = registry.RegisterSystem<CameraControllerSystem>();
+
+    Signature renderSignature;
+    renderSignature.set(GetComponentTypeID<RenderComponent>());
+    renderSignature.set(GetComponentTypeID<TransformComponent>());
+    registry.SetSystemSignature<RenderSystem>(renderSignature);
+
+    Signature transformSignature;
+    transformSignature.set(GetComponentTypeID<TransformComponent>());
+    registry.SetSystemSignature<TransformSystem>(transformSignature);
+
+    Signature cameraSignature;
+    cameraSignature.set(GetComponentTypeID<CameraComponent>());
+    cameraSignature.set(GetComponentTypeID<TransformComponent>());
+    registry.SetSystemSignature<CameraSystem>(cameraSignature);
+    registry.SetSystemSignature<CameraControllerSystem>(cameraSignature);
 
     Entity mainCamera = registry.CreateEntity();
     registry.AddComponent(mainCamera, TransformComponent{
@@ -87,20 +63,26 @@ void Application::Run() {
     });
     registry.AddComponent(mainCamera, CameraComponent{});
 
-    std::unique_ptr<VertexArray> cubeVAO = CreateTestCube();
-    std::unique_ptr<Shader> defaultShader = std::make_unique<Shader>("../../assets/shaders/basic.vert", "../../assets/shaders/basic.frag");
+    std::unique_ptr<Model> myModel = ModelLoader::Load("../../assets/models/Miku.fbx");
+    AssetHandle modelHandle = AssetManager::Get().models.Add(std::move(myModel));
 
-    AssetHandle cubeMeshHandle = AssetManager::Get().meshes.Add(std::move(cubeVAO));
+    std::unique_ptr<Shader> defaultShader = std::make_unique<Shader>("../../assets/shaders/basic.vert", "../../assets/shaders/basic.frag");
     AssetHandle shaderHandle = AssetManager::Get().shaders.Add(std::move(defaultShader));
 
-    Entity cube = registry.CreateEntity();
-    registry.AddComponent(cube, TransformComponent{
+    AssetHandle modelTex = AssetManager::Get().textures.Add(Texture::Load("../../assets/models/Miku.png"));
+
+    Entity modelEntity = registry.CreateEntity();
+    registry.AddComponent(modelEntity, TransformComponent{
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(1.0f, 1.0f, 1.0f)
     });
 
-    registry.AddComponent(cube, RenderComponent{ cubeMeshHandle, shaderHandle, INVALID_ASSET_HANDLE });
+    registry.AddComponent(modelEntity, RenderComponent{ 
+        modelHandle, 
+        shaderHandle, 
+        {modelTex}
+    });
 
     Uint64 lastTime = SDL_GetPerformanceCounter();
 
@@ -109,29 +91,41 @@ void Application::Run() {
         float deltaTime = (float)((currentTime - lastTime) / (double)SDL_GetPerformanceFrequency());
         lastTime = currentTime;
         HandleEvents();
-
+        
         for (const auto& event : eventBus.GetEvents()) {
-            std::visit([this](auto&& e) {
+            std::visit([this, &cameraControllerSystem](auto&& e) {
                 using T = std::decay_t<decltype(e)>;
                 if constexpr (std::is_same_v<T, WindowCloseEvent>) {
                     isRunning = false;
-                } 
-                else if constexpr (std::is_same_v<T, WindowResizeEvent>) {
+                } else if constexpr (std::is_same_v<T, WindowResizeEvent>) {
                     std::cout << "Window resized to: " << e.width << "x" << e.height << "\n";
+                    windowWidth = e.width;
+                    windowHeight = e.height;
+                    RenderCommand::SetViewport(0, 0, windowWidth, windowHeight);
+                } else if constexpr (std::is_same_v<T, MouseButtonEvent>) {
+                    if (e.button == SDL_BUTTON_RIGHT && e.pressed) {
+                        cameraControllerSystem->ToggleCameraMode(window.GetNativeWindow());
+                    }
                 }
             }, event);
         }
+
         eventBus.Clear();
-        CameraControllerSystem::Update(registry, window.GetNativeWindow(), deltaTime);
-        TransformSystem::Update(registry);
-        CameraSystem::Update(registry, 1280.0f / 720.0f);
+
+        cameraControllerSystem->Update(registry, deltaTime);
+        transformSystem->Update(registry);
+        float aspectRatio = (float)windowWidth / (float)(windowHeight > 0 ? windowHeight : 1);
+        cameraSystem->Update(registry, aspectRatio);
+
         renderer.Clear();
 
-        auto& cubeTransform = registry.GetComponent<TransformComponent>(cube);
-        cubeTransform.rotation.x += 45.0f * deltaTime;
-        cubeTransform.rotation.y += 45.0f * deltaTime;
+        auto& modelTransform = registry.GetComponent<TransformComponent>(modelEntity);
+        if (debugMenu.spinObject) {
+            modelTransform.rotation.x += 45.0f * deltaTime;
+            modelTransform.rotation.y += 45.0f * deltaTime;
+        }
 
-        RenderSystem::Update(registry);
+        renderSystem->Update(registry);
 
         debugMenu.Begin();
         
@@ -176,6 +170,12 @@ void Application::HandleEvents() {
                     event.key.key, 
                     event.key.repeat != 0
                 });
+                break;
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                eventBus.Push(MouseButtonEvent{ event.button.button, true });
+                break;
+            case SDL_EVENT_MOUSE_BUTTON_UP:
+                eventBus.Push(MouseButtonEvent{ event.button.button, false });
                 break;
         }
     }

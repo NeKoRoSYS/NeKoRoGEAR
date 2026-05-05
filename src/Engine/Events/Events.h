@@ -13,8 +13,14 @@ struct KeyPressEvent {
     bool repeat;
 };
 
+struct MouseButtonEvent {
+    uint8_t button;
+    bool pressed;
+};
+
 using EngineEvent = std::variant<
     WindowCloseEvent, 
     WindowResizeEvent, 
-    KeyPressEvent
+    KeyPressEvent,
+    MouseButtonEvent
 >;

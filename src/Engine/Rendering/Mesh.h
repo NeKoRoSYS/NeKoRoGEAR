@@ -3,10 +3,15 @@
 #include <vector>
 #include <cstddef>
 
+#define MAX_BONE_INFLUENCE 4
+
 struct Vertex {
     float position[3];
     float normal[3];
     float texCoords[2];
+    
+    int boneIDs[MAX_BONE_INFLUENCE];
+    float boneWeights[MAX_BONE_INFLUENCE]; 
 };
 
 class Mesh {

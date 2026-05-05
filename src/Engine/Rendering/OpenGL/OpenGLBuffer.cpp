@@ -59,9 +59,7 @@ void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& ver
     glBindVertexArray(rendererID);
     vertexBuffer->Bind();
 
-    // TEMPORARY: Hardcoding your Mesh.cpp Vertex layout (Position, Normal, TexCoords)
-    // 3 floats (pos) + 3 floats (norm) + 2 floats (tex) = 8 floats total stride
-    uint32_t stride = 8 * sizeof(float);
+    uint32_t stride = 64; 
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
@@ -71,6 +69,9 @@ void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& ver
     
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(6 * sizeof(float)));
+
+    // (Eventually, you will need to add glVertexAttribPointer calls for locations 3 and 4 
+    // to pass the bone data to your shader for skeletal animation).
 
     vertexBuffers.push_back(vertexBuffer);
 }

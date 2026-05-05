@@ -18,5 +18,7 @@ class Application {
         Renderer renderer;
         DebugMenu debugMenu;
         bool isRunning;
+        uint32_t windowWidth = 1280;
+        uint32_t windowHeight = 720;
         void HandleEvents();
 };

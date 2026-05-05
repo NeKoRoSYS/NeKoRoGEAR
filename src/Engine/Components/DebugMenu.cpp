@@ -27,6 +27,7 @@ void DebugMenu::Begin() {
 void DebugMenu::Draw(float* clearColor) {
     ImGui::Begin("Debug Panel");
     ImGui::ColorEdit4("Clear Color", clearColor);
+    ImGui::Checkbox("Spin Object", &spinObject);
     ImGui::End();
 }
 
