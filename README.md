@@ -16,6 +16,7 @@ The very foundation of the engine. As much as I want to reinvent the wheel to fu
 - GLM for math calculations
 - miniaudio/FMOD for sounds
 <br>
+
 ```
 src
 └── Engine
@@ -29,6 +30,7 @@ src
 └── Game
      └── WIP
 ```
+
 <br>
 
 ## Custom Features
