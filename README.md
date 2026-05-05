@@ -1,6 +1,7 @@
 # NeKoRoGINE
 
 A generic game engine I made as a hobby and is by no means production-ready! Feel free to use as template or modify idk
+<br>
 
 ## Core Tech Stack
 The very foundation of the engine. As much as I want to reinvent the wheel to further deepen my understanding about the inner workings of game engines, I settled for established libraries when making the core of the engine.
