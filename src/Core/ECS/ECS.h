@@ -150,6 +150,16 @@ public:
     }
 
     template <typename T>
+    bool HasComponent(Entity entity) {
+        ComponentTypeID typeId = GetComponentTypeID<T>();
+        auto it = entitySignatures.find(entity);
+        if (it != entitySignatures.end()) {
+            return it->second.test(typeId);
+        }
+        return false;
+    }
+
+    template <typename T>
     void AddComponent(Entity entity, T component) {
         GetComponentArray<T>()->InsertData(entity, component);
 

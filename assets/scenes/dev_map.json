@@ -1,0 +1,88 @@
+{
+    "Entities": [
+        {
+            "CameraComponent": {
+                "FOV": 70.0,
+                "FarClip": 100.0,
+                "IsPrimary": true,
+                "NearClip": 0.10000000149011612
+            },
+            "EntityID": 0,
+            "TagComponent": {
+                "Tag": "Main Camera"
+            },
+            "TransformComponent": {
+                "Position": [
+                    0.16874149441719055,
+                    -0.5616235136985779,
+                    1.3819611072540283
+                ],
+                "Rotation": [
+                    84.00000762939453,
+                    -91.5999984741211,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "EntityID": 1,
+            "RenderComponent": {
+                "ModelHandle": 1,
+                "ShaderHandle": 1
+            },
+            "TagComponent": {
+                "Tag": "Miku"
+            },
+            "TransformComponent": {
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Rotation": [
+                    173.9825897216797,
+                    173.9825897216797,
+                    0.0
+                ],
+                "Scale": [
+                    2.200000047683716,
+                    4.900000095367432,
+                    1.0
+                ]
+            }
+        },
+        {
+            "EntityID": 2,
+            "RenderComponent": {
+                "ModelHandle": 1,
+                "ShaderHandle": 1
+            },
+            "TagComponent": {
+                "Tag": "Empty Entity"
+            },
+            "TransformComponent": {
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        }
+    ],
+    "Scene": "NeKoRoGINE_Scene"
+}

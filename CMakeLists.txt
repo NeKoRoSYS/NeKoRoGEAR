@@ -39,6 +39,7 @@ set(ENGINE_SOURCES
     src/Core/Components/Application.cpp
     src/Core/Components/DebugMenu.cpp
     src/Core/Components/InputManager.cpp
+    src/Core/Components/SceneSerializer.cpp
     src/Core/Rendering/Renderer.cpp
     src/Core/Rendering/Shader.cpp
     src/Core/Rendering/Window.cpp

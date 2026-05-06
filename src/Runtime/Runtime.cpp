@@ -1,17 +1,16 @@
 #include "Core/EntryPoint.h"
 #include "Core/Components/Application.h"
 #include "Core/Components/InputManager.h"
+#include "Core/Components/Scene.h"
+#include "Core/Components/SceneSerializer.h"
 #include "Core/ECS/Components/Transform.h"
 #include "Core/ECS/Components/Camera.h"
 #include "Core/ECS/Components/Renderable.h"
+#include "Core/ECS/Components/Tag.h"
 #include "Core/ECS/Systems/RenderSystem.h"
 #include "Core/ECS/Systems/TransformSystem.h"
 #include "Core/ECS/Systems/CameraSystem.h"
 #include "Core/ECS/Systems/CameraControllerSystem.h"
-#include "Core/Assets/AssetManager.h"
-#include "Core/Assets/ModelLoader.h"
-#include "Core/Rendering/RenderCommand.h"
-#include <iostream>
 
 class RuntimeApp : public Application {
 private:
@@ -20,9 +19,7 @@ private:
     std::shared_ptr<CameraSystem> cameraSystem;
     std::shared_ptr<CameraControllerSystem> cameraControllerSystem;
     
-    Entity mainCamera;
-    Entity modelEntity;
-
+    std::shared_ptr<Scene> activeScene;
     int windowWidth = 1280;
     int windowHeight = 720;
 
@@ -30,6 +27,10 @@ public:
     RuntimeApp() : Application() {}
 
     void OnInit() override {
+        activeScene = std::make_shared<Scene>();
+        auto& registry = activeScene->GetRegistry();
+
+        registry.RegisterComponent<TagComponent>();
         registry.RegisterComponent<TransformComponent>();
         registry.RegisterComponent<CameraComponent>();
         registry.RegisterComponent<RenderComponent>();
@@ -56,47 +57,16 @@ public:
 
         InputManager& input = InputManager::Get();
         input.BindAction(InputAction::ToggleCameraMode, MouseButton::Right);
-        input.BindAction(InputAction::Sprint, KeyCode::Shift);
-        input.BindAxis(InputAxis::MoveForward, KeyCode::W,  1.0f);
-        input.BindAxis(InputAxis::MoveForward, KeyCode::S, -1.0f);
-        input.BindAxis(InputAxis::MoveRight,   KeyCode::D,  1.0f);
-        input.BindAxis(InputAxis::MoveRight,   KeyCode::A, -1.0f);
-        input.BindAxis(InputAxis::MoveUp,      KeyCode::E,  1.0f);
-        input.BindAxis(InputAxis::MoveUp,      KeyCode::Q, -1.0f);
-        input.BindAxis(InputAxis::LookRight, MouseAxis::X,  1.0f);
-        input.BindAxis(InputAxis::LookUp,    MouseAxis::Y, -1.0f);
 
-        mainCamera = registry.CreateEntity();
-        registry.AddComponent(mainCamera, TransformComponent{
-            glm::vec3(0.0f, 0.0f, 3.0f),
-            glm::vec3(0.0f, -90.0f, 0.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f)
-        });
-        registry.AddComponent(mainCamera, CameraComponent{});
-
-        std::unique_ptr<Model> myModel = ModelLoader::Load("../../assets/models/Miku.fbx");
-        size_t numMeshes = myModel->meshHandles.size();
-        AssetHandle modelHandle = AssetManager::Get().models.Add(std::move(myModel));
-        
-        std::unique_ptr<Shader> defaultShader = std::make_unique<Shader>("../../assets/shaders/basic.vert", "../../assets/shaders/basic.frag");
-        AssetHandle shaderHandle = AssetManager::Get().shaders.Add(std::move(defaultShader));
-
-        AssetHandle manualTex = AssetManager::Get().textures.Add(Texture::Load("../../assets/models/Miku.png"));
-
-        std::vector<AssetHandle> overrides;
-
-        for (size_t i = 0; i < numMeshes; ++i) {
-            overrides.push_back(manualTex); 
+        SceneSerializer serializer(activeScene);
+        if (!serializer.Deserialize("../../assets/scenes/dev_map.json")) {
+            std::cerr << "FATAL: Failed to load startup scene (dev_map.json)." << std::endl;
+            
+            Entity fallbackCamera = activeScene->CreateEntity("Fallback Camera");
+            registry.AddComponent(fallbackCamera, CameraComponent{});
+            auto& camTransform = registry.GetComponent<TransformComponent>(fallbackCamera);
+            camTransform.position = glm::vec3(0.0f, 0.0f, 5.0f);
         }
-
-        modelEntity = registry.CreateEntity();
-        registry.AddComponent(modelEntity, TransformComponent{
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(1.0f, 1.0f, 1.0f)
-        });
-
-        registry.AddComponent(modelEntity, RenderComponent{ modelHandle, shaderHandle, overrides });
     }
 
     void OnUpdate(float deltaTime) override {
@@ -121,6 +91,8 @@ public:
 
         bool cameraModeActive = input.IsActionActive(InputAction::ToggleCameraMode);
         window.SetCursorEnabled(!cameraModeActive);
+
+        auto& registry = activeScene->GetRegistry();
         cameraControllerSystem->Update(registry, deltaTime, cameraModeActive);
         transformSystem->Update(registry);
 
@@ -130,7 +102,7 @@ public:
 
     void OnRender() override {
         renderer.Clear();
-        renderSystem->Update(registry);
+        renderSystem->Update(activeScene->GetRegistry());
     }
 };
 
