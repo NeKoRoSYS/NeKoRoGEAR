@@ -1,6 +1,18 @@
-# NeKoRoGINE
+# NeKoRoGEAR
 
-A generic game engine I made as a hobby and is by no means production-ready! Feel free to use as template or modify idk
+Pronounced as "necro-gear." It is a generic general-purpose 3D game engine I made for personal use and is by no means professional or production-ready (yet)! Feel free to use as template or modify according to your liking.
+<br>
+<br>
+
+## Project Goals
+- Practice and understand the concepts of C++.
+- Make a simple general-purpose game engine with a working game example.
+  - Achieve a Source-esque gameplay vibe, and have similar toolsets like an equivalent of Hammer for level editing but for this engine.
+- Understand game development at a deeper level with minimal help from an LLM (strictly help for documentations and code snippets only!).
+- Adapt better coding practices for more optimal, efficient, and readable code. Including but not limited to:
+  - Abstraction
+  - Decoupling
+  - Single Responsibility
 <br>
 
 ## Core Tech Stack
@@ -27,30 +39,23 @@ src
 │    └── Rendering
 ├── CSharp
 │    └── WIP
+├── Editor
+│    └── WIP
 └── Game
      └── WIP
 ```
 
 <br>
 
-## Custom Features
+## Planned Custom Features
 These are the systems and features of my engine that are quite specific and I deem to be worth manually making on top of the core. It's what makes NeKoRoGINE somewhat its own thing! :D
-- Rendering Hardware Interface - as I'm writing this, Minecraft got its Vulcan API support along the already-established OpenGL. As this engine grows, I'd rather avoid having nightmares refactoring the rendering engine just to support another graphics library.
-- Event system - Inputs and window events.
+- Rendering Hardware Interface - NeKoRoGEAR has an abstraction layer for graphics and rendering which sits between OpenGL and the engine core. As this engine grows, I'd rather avoid having nightmares refactoring the rendering engine just to support another graphics library like Vulkan.
+- Event System - Inputs and window events.
   - Dedicated Input Manager - Similar to Unity Input System.
 - Entity Component System - I want to stray from Unity's OOP/GameObject workflow because Entities and Components are more performant.
-- Load external C# scripts, meshes, shaders, and textures.
-<br>
-
-## Project Goals
-- Practice and understand the concepts of C++.
-- Make a simple general-purpose game engine with a working game example.
-  - Achieve a Source-esque gameplay vibe, and have similar toolsets like an equivalent of Hammer for level editing but for this engine.
-- Understand game development at a deeper level with minimal help from an LLM (strictly help for documentations and code snippets only!).
-- Adapt better coding practices for more optimal, efficient, and readable code. Including but not limited to:
-  - Abstraction
-  - Decoupling
-  - Single Responsibility
+- Editor and Game clients - The architecture for NeKoRoGEAR was built so that any client based on the engine shares the same library.
+- Scene Management
+  - Load external C# scripts, meshes, shaders, and textures.
 <br>
 
 ## TODO
