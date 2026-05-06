@@ -65,3 +65,4 @@ These are the systems and features of my engine that are quite specific and I de
   - Camera view
   - Player Movement
   - Custom gameplay mechanics
+- Documentation. At the time I am writing this, only God knows whatever the hell I'm doing and I pray everyday that I remember how things go within the project.
