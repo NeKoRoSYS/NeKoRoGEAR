@@ -48,7 +48,7 @@ src
 <br>
 
 ## Planned Custom Features
-These are the systems and features of my engine that are quite specific and I deem to be worth manually making on top of the core. It's what makes NeKoRoGINE somewhat its own thing! :D
+These are the systems and features of my engine that are quite specific and I deem to be worth manually making on top of the core. It's what makes NeKoRoGEAR somewhat its own thing! :D
 - Rendering Hardware Interface - NeKoRoGEAR has an abstraction layer for graphics and rendering which sits between OpenGL and the engine core. As this engine grows, I'd rather avoid having nightmares refactoring the rendering engine just to support another graphics library like Vulkan.
 - Event System - Inputs and window events.
   - Dedicated Input Manager - Similar to Unity Input System.
