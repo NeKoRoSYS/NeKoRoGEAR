@@ -1,6 +1,7 @@
 #include "Core/EntryPoint.h"
+#include "Core/Assets/AssetManager.h"
+#include "Core/Assets/ModelLoader.h"
 #include "Core/Components/Application.h"
-#include "Core/Components/InputManager.h"
 #include "Core/Components/Scene.h"
 #include "Core/Components/SceneSerializer.h"
 #include "Core/ECS/Components/Transform.h"
@@ -23,12 +24,8 @@ private:
     int windowWidth = 1280;
     int windowHeight = 720;
 
-public:
-    RuntimeApp() : Application() {}
-
-    void OnInit() override {
-        activeScene = std::make_shared<Scene>();
-        auto& registry = activeScene->GetRegistry();
+    void SetupScene(std::shared_ptr<Scene> scene) {
+        auto& registry = scene->GetRegistry();
 
         registry.RegisterComponent<TagComponent>();
         registry.RegisterComponent<TransformComponent>();
@@ -55,8 +52,13 @@ public:
         registry.SetSystemSignature<CameraSystem>(cameraSignature);
         registry.SetSystemSignature<CameraControllerSystem>(cameraSignature);
 
-        InputManager& input = InputManager::Get();
-        input.BindAction(InputAction::ToggleCameraMode, MouseButton::Right);
+        std::unique_ptr<Model> myModel = ModelLoader::Load("../../assets/models/Miku.fbx");
+        AssetManager::Get().models.Add(std::move(myModel));
+
+        std::unique_ptr<Shader> defaultShader = std::make_unique<Shader>("../../assets/shaders/basic.vert", "../../assets/shaders/basic.frag");
+        AssetManager::Get().shaders.Add(std::move(defaultShader));
+
+        AssetManager::Get().textures.Add(Texture::Load("../../assets/models/Miku.png"));
 
         SceneSerializer serializer(activeScene);
         if (!serializer.Deserialize("../../assets/scenes/dev_map.json")) {
@@ -69,8 +71,20 @@ public:
         }
     }
 
+    void BindInputs() {
+        input.BindAction(InputAction::ToggleCameraMode, MouseButton::Right);
+    }
+
+public:
+    RuntimeApp() : Application() {}
+
+    void OnInit() override {
+        activeScene = std::make_shared<Scene>();
+        SetupScene(activeScene);
+        BindInputs();
+    }
+
     void OnUpdate(float deltaTime) override {
-        InputManager& input = InputManager::Get();
         input.Update();
 
         for (const auto& event : eventBus.GetEvents()) {

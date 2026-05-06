@@ -1,18 +1,7 @@
 #include <imgui.h>
 #include "Application.h"
-#include "Core/Assets/ModelLoader.h"
-#include "Core/Rendering/Window.h"
-#include "Core/Rendering/Renderer.h"
 #include "Core/Events/Events.h"
-#include "Core/ECS/ECS.h"
-#include "Core/ECS/Components/Transform.h"
-#include "Core/ECS/Components/Camera.h"
-#include "Core/ECS/Systems/TransformSystem.h"
-#include "Core/ECS/Systems/CameraSystem.h"
-#include "Core/ECS/Systems/CameraControllerSystem.h"
-#include "Core/ECS/Systems/RenderSystem.h"
 #include <SDL3/SDL.h>
-#include <glad/glad.h>
 #include <iostream>
 
 Application::Application() : window("NeKoRoGEAR", 1280, 720), renderer(window) {
@@ -22,10 +11,6 @@ Application::Application() : window("NeKoRoGEAR", 1280, 720), renderer(window) {
 Application::~Application() {
     debugMenu.Shutdown();
 }
-
-#include "Core/Rendering/Buffer.h"
-#include "Core/Rendering/Shader.h"
-#include <vector>
 
 void Application::Run() {
     OnInit();

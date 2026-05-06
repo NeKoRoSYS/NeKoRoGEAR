@@ -1,6 +1,5 @@
 #include "Core/EntryPoint.h"
 #include "Core/Components/Application.h"
-#include "Core/Components/InputManager.h"
 #include "Core/Components/Scene.h"
 #include "Core/Components/SceneSerializer.h"
 #include "Core/ECS/Components/Transform.h"
@@ -52,31 +51,6 @@ private:
         cameraSignature.set(GetComponentTypeID<TransformComponent>());
         registry.SetSystemSignature<CameraSystem>(cameraSignature);
         registry.SetSystemSignature<CameraControllerSystem>(cameraSignature);
-    }
-
-public:
-    EditorApp() : Application() {}
-
-    std::shared_ptr<Scene> activeScene;
-    Entity selectedEntity = -1;
-
-    void OnInit() override {
-        activeScene = std::make_shared<Scene>();
-        SetupScene(activeScene);
-
-        auto& registry = activeScene->GetRegistry();
-
-        InputManager& input = InputManager::Get();
-        input.BindAction(InputAction::ToggleCameraMode, MouseButton::Right);
-        input.BindAction(InputAction::Sprint, KeyCode::Shift);
-        input.BindAxis(InputAxis::MoveForward, KeyCode::W,  1.0f);
-        input.BindAxis(InputAxis::MoveForward, KeyCode::S, -1.0f);
-        input.BindAxis(InputAxis::MoveRight,   KeyCode::D,  1.0f);
-        input.BindAxis(InputAxis::MoveRight,   KeyCode::A, -1.0f);
-        input.BindAxis(InputAxis::MoveUp,      KeyCode::E,  1.0f);
-        input.BindAxis(InputAxis::MoveUp,      KeyCode::Q, -1.0f);
-        input.BindAxis(InputAxis::LookRight, MouseAxis::X,  1.0f);
-        input.BindAxis(InputAxis::LookUp,    MouseAxis::Y, -1.0f);
 
         mainCamera = activeScene->CreateEntity("Main Camera");
         auto& camTransform = registry.GetComponent<TransformComponent>(mainCamera);
@@ -100,8 +74,32 @@ public:
         registry.AddComponent(modelEntity, RenderComponent{ modelHandle, shaderHandle, overrides });
     }
 
+    void BindInputs() {
+        input.BindAction(InputAction::ToggleCameraMode, MouseButton::Right);
+        input.BindAction(InputAction::Sprint, KeyCode::LShift);
+        input.BindAxis(InputAxis::MoveForward, KeyCode::W,  1.0f);
+        input.BindAxis(InputAxis::MoveForward, KeyCode::S, -1.0f);
+        input.BindAxis(InputAxis::MoveRight,   KeyCode::D,  1.0f);
+        input.BindAxis(InputAxis::MoveRight,   KeyCode::A, -1.0f);
+        input.BindAxis(InputAxis::MoveUp,      KeyCode::E,  1.0f);
+        input.BindAxis(InputAxis::MoveUp,      KeyCode::Q, -1.0f);
+        input.BindAxis(InputAxis::LookRight, MouseAxis::X,  1.0f);
+        input.BindAxis(InputAxis::LookUp,    MouseAxis::Y, -1.0f);
+    }
+
+public:
+    EditorApp() : Application() {}
+
+    std::shared_ptr<Scene> activeScene;
+    Entity selectedEntity = -1;
+
+    void OnInit() override {
+        activeScene = std::make_shared<Scene>();
+        SetupScene(activeScene);
+        BindInputs();
+    }
+
     void OnUpdate(float deltaTime) override {
-        InputManager& input = InputManager::Get();
         input.Update();
 
         for (size_t i = 0; i < eventBus.GetEvents().size(); ++i) {
@@ -122,9 +120,13 @@ public:
         auto& registry = activeScene->GetRegistry();
         cameraControllerSystem->Update(registry, deltaTime, cameraModeActive);
         auto& modelTransform = registry.GetComponent<TransformComponent>(modelEntity);
-        if (debugMenu.spinObject) {
-            modelTransform.rotation.x += 45.0f * deltaTime;
-            modelTransform.rotation.y += 45.0f * deltaTime;
+        
+        if (registry.HasComponent<TransformComponent>(modelEntity)) {
+            auto& modelTransform = registry.GetComponent<TransformComponent>(modelEntity);
+            if (debugMenu.spinObject) {
+                modelTransform.rotation.x += 45.0f * deltaTime;
+                modelTransform.rotation.y += 45.0f * deltaTime;
+            }
         }
 
         transformSystem->Update(registry);
@@ -145,6 +147,8 @@ public:
                     activeScene = std::make_shared<Scene>();
                     SetupScene(activeScene);
                     selectedEntity = (Entity)-1;
+                    modelEntity = (Entity)-1;
+                    mainCamera = (Entity)-1;
                 }
                 
                 if (ImGui::MenuItem("Save Scene")) {
@@ -160,6 +164,8 @@ public:
                     if (serializer.Deserialize("../../assets/scenes/dev_map.json")) {
                         activeScene = newScene;
                         selectedEntity = (Entity)-1;
+                        modelEntity = (Entity)-1;
+                        mainCamera = (Entity)-1;
                     }
                 }
                 
@@ -222,6 +228,25 @@ public:
                     ImGui::DragFloat3("Position", &transform.position.x, 0.1f);
                     ImGui::DragFloat3("Rotation", &transform.rotation.x, 0.1f);
                     ImGui::DragFloat3("Scale", &transform.scale.x, 0.1f);
+                }
+            }
+
+            if (registry.HasComponent<CameraComponent>(selectedEntity)) {
+                if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen)) {
+                    auto& camera = registry.GetComponent<CameraComponent>(selectedEntity);
+                    ImGui::DragFloat("FOV", &camera.fov, 1.0f);
+                    ImGui::DragFloat("Near Clip", &camera.nearClip, 0.1f);
+                    ImGui::DragFloat("Far Clip", &camera.farClip, 1.0f);
+                    ImGui::Checkbox("Is Primary", &camera.isPrimary);
+                }
+            }
+
+            if (registry.HasComponent<RenderComponent>(selectedEntity)) {
+                if (ImGui::CollapsingHeader("Renderable", ImGuiTreeNodeFlags_DefaultOpen)) {
+                    auto& renderable = registry.GetComponent<RenderComponent>(selectedEntity);
+                    // displaying the raw uint32_t AssetHandles for now
+                    ImGui::Text("Model Handle: %u", renderable.modelHandle);
+                    ImGui::Text("Shader Handle: %u", renderable.shaderHandle);
                 }
             }
 

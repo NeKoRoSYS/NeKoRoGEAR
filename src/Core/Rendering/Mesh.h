@@ -28,6 +28,6 @@ public:
     void Draw() const;
 
 private:
-    GLuint VAO, VBO, EBO;
+    unsigned int VAO, VBO, EBO;
     void SetupMesh();
 };

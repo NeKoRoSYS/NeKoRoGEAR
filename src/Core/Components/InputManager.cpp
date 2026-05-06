@@ -10,7 +10,8 @@ static KeyCode MapSDLToEngineKey(SDL_Keycode key) {
         case SDLK_Q: return KeyCode::Q;
         case SDLK_E: return KeyCode::E;
         case SDLK_SPACE: return KeyCode::Space;
-        case SDLK_LSHIFT: return KeyCode::Shift;
+        case SDLK_LSHIFT: return KeyCode::LShift;
+        case SDLK_LCTRL: return KeyCode::LControl;
         default: return KeyCode::Unknown;
     }
 }
@@ -24,7 +25,8 @@ static SDL_Scancode MapEngineKeyToSDL(KeyCode key) {
         case KeyCode::Q: return SDL_SCANCODE_Q;
         case KeyCode::E: return SDL_SCANCODE_E;
         case KeyCode::Space: return SDL_SCANCODE_SPACE;
-        case KeyCode::Shift: return SDL_SCANCODE_LSHIFT;
+        case KeyCode::LShift: return SDL_SCANCODE_LSHIFT;
+        case KeyCode::LControl: return SDL_SCANCODE_LCTRL;
         default: return SDL_SCANCODE_UNKNOWN;
     }
 }

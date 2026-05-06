@@ -3,7 +3,7 @@
 
 enum class KeyCode : uint16_t {
     Unknown = 0,
-    W, A, S, D, Q, E, Space, Shift
+    W, A, S, D, Q, E, Space, LShift, LControl
 };
 
 enum class MouseButton : uint8_t {

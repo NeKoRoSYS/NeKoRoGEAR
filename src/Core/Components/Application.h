@@ -5,6 +5,7 @@
 #include "Core/Rendering/Window.h"
 #include "Core/Rendering/Renderer.h"
 #include "Core/Components/DebugMenu.h"
+#include "Core/Components/InputManager.h"
 
 class Application {
     public:
@@ -22,6 +23,7 @@ class Application {
         Window window;
         Renderer renderer;
         DebugMenu debugMenu;
+        InputManager input = InputManager::Get();
         bool isRunning = true;
     private:
         void HandleEvents();

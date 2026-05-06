@@ -9,7 +9,6 @@ private:
     bool isRelativeModeEnabled = false; 
 
 public:
-
     void Update(Registry& registry, float deltaTime, bool isCameraActive) {
         if (!isCameraActive) return;
         float moveSpeed = 5.0f * deltaTime;

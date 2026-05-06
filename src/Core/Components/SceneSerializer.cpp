@@ -69,10 +69,15 @@ bool SceneSerializer::Serialize(const std::string& filepath) {
 bool SceneSerializer::Deserialize(const std::string& filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) return false;
-
+    
     json sceneJson;
-    file >> sceneJson;
-
+    try {
+        file >> sceneJson;
+    } catch (const nlohmann::json::parse_error& e) {
+        std::cerr << "JSON Parse Error in " << filepath << ": " << e.what() << std::endl;
+        return false;
+    }
+    
     if (!sceneJson.contains("Entities")) return false;
 
     auto& registry = m_Scene->GetRegistry();
