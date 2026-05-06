@@ -11,7 +11,7 @@ Pronounced as "necro-gear." It is a generic general-purpose 3D game engine I mad
 - Understand game development at a deeper level with minimal help from an LLM (strictly help for documentations and code snippets only!).
 - Adapt better coding practices for more optimal, efficient, and readable code. Including but not limited to:
   - Abstraction
-  - Decoupling
+  - Decoupling/Separation of Concerns
   - Single Responsibility
 <br>
 
