@@ -6,4 +6,5 @@ using AssetHandle = uint32_t;
 
 struct Model {
     std::vector<AssetHandle> meshHandles;
+    std::vector<AssetHandle> textureHandles;
 };

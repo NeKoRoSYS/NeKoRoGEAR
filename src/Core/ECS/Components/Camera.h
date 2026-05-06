@@ -4,7 +4,7 @@
 
 struct CameraComponent {
     float fov = 70.0f;
-    float nearClip = 0.01f;
+    float nearClip = 0.1f;
     float farClip = 100.0f;
     
     glm::mat4 viewMatrix{1.0f};

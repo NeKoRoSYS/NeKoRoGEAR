@@ -63,7 +63,7 @@ private:
 #include "Core/Rendering/Buffer.h"
 #include "Core/Rendering/Shader.h"
 #include "Core/Rendering/Texture.h"
-#include "Model.h"
+#include "Core/Assets/Model.h"
 
 class AssetManager {
 public:

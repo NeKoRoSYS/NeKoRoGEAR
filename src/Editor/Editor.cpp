@@ -71,12 +71,19 @@ public:
         registry.AddComponent(mainCamera, CameraComponent{});
 
         std::unique_ptr<Model> myModel = ModelLoader::Load("../../assets/models/Miku.fbx");
+        size_t numMeshes = myModel->meshHandles.size();
         AssetHandle modelHandle = AssetManager::Get().models.Add(std::move(myModel));
         
         std::unique_ptr<Shader> defaultShader = std::make_unique<Shader>("../../assets/shaders/basic.vert", "../../assets/shaders/basic.frag");
         AssetHandle shaderHandle = AssetManager::Get().shaders.Add(std::move(defaultShader));
-        
-        AssetHandle modelTex = AssetManager::Get().textures.Add(Texture::Load("../../assets/models/Miku.png"));
+
+        AssetHandle manualTex = AssetManager::Get().textures.Add(Texture::Load("../../assets/models/Miku.png"));
+
+        std::vector<AssetHandle> overrides;
+
+        for (size_t i = 0; i < numMeshes; ++i) {
+            overrides.push_back(manualTex); 
+        }
 
         modelEntity = registry.CreateEntity();
         registry.AddComponent(modelEntity, TransformComponent{
@@ -84,7 +91,8 @@ public:
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(1.0f, 1.0f, 1.0f)
         });
-        registry.AddComponent(modelEntity, RenderComponent{ modelHandle, shaderHandle, {modelTex} });
+
+        registry.AddComponent(modelEntity, RenderComponent{ modelHandle, shaderHandle, overrides });
     }
 
     void OnUpdate(float deltaTime) override {

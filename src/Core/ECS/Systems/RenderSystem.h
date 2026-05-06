@@ -37,14 +37,25 @@ public:
             shader->SetMat4("u_View", view);
             shader->SetMat4("u_Projection", projection);
             shader->SetMat4("u_Model", transform.modelMatrix);
+            shader->SetInt("u_Texture", 0);
 
             for (size_t j = 0; j < model->meshHandles.size(); ++j) {
                 VertexArray* vao = AssetManager::Get().meshes.Get(model->meshHandles[j]);
                 if (!vao) continue;
+                
+                AssetHandle texToBind = INVALID_ASSET_HANDLE;
 
-                if (j < renderable.textureHandles.size()) {
-                    Texture* tex = AssetManager::Get().textures.Get(renderable.textureHandles[j]);
-                    if (tex) tex->Bind(0);
+                if (j < renderable.materialOverrides.size() && renderable.materialOverrides[j] != INVALID_ASSET_HANDLE) {
+                    texToBind = renderable.materialOverrides[j];
+                } else if (j < model->textureHandles.size() && model->textureHandles[j] != INVALID_ASSET_HANDLE) {
+                    texToBind = model->textureHandles[j];
+                }
+
+                if (texToBind != INVALID_ASSET_HANDLE) {
+                    Texture* tex = AssetManager::Get().textures.Get(texToBind);
+                    if (tex) {
+                        tex->Bind(0);
+                    }
                 }
 
                 vao->Bind();

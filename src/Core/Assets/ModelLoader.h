@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <filesystem>
 
 class ModelLoader {
 public:
@@ -21,7 +22,7 @@ public:
         // aiProcess_GenSmoothNormals: Calculates normals if the artist forgot to export them.
         const aiScene* scene = importer.ReadFile(filepath, 
             aiProcess_Triangulate | 
-            aiProcess_FlipUVs | 
+            /*aiProcess_FlipUVs | */
             aiProcess_GenSmoothNormals);
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -30,6 +31,8 @@ public:
         }
 
         auto model = std::make_unique<Model>();
+
+        std::string directory = std::filesystem::path(filepath).parent_path().string();
 
         for (unsigned int m = 0; m < scene->mNumMeshes; m++) {
             aiMesh* mesh = scene->mMeshes[m];
@@ -70,12 +73,28 @@ public:
             auto vertexArray = VertexArray::Create();
             auto vertexBuffer = VertexBuffer::Create((float*)vertices.data(), vertices.size() * sizeof(Vertex));
             vertexArray->AddVertexBuffer(std::move(vertexBuffer));
-
             auto indexBuffer = IndexBuffer::Create(indices.data(), indices.size());
             vertexArray->SetIndexBuffer(std::move(indexBuffer));
 
             AssetHandle meshHandle = AssetManager::Get().meshes.Add(std::move(vertexArray));
             model->meshHandles.push_back(meshHandle);
+            
+            AssetHandle texHandle = INVALID_ASSET_HANDLE;
+            if (mesh->mMaterialIndex >= 0) {
+                aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+                
+                if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+                    aiString str;
+                    material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
+                    
+                    std::filesystem::path rawPath(str.C_Str());
+                    std::string filename = rawPath.filename().string();
+                    std::string finalTexPath = directory + "/" + filename;
+                    texHandle = AssetManager::Get().textures.Add(Texture::Load(finalTexPath));
+                }
+            }
+
+            model->textureHandles.push_back(texHandle);
         }
 
         return model;
