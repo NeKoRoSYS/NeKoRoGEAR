@@ -1,12 +1,12 @@
 #pragma once
-#include "Engine/ECS/ECS.h"
-#include "Engine/ECS/Components/Transform.h"
-#include "Engine/ECS/Components/Renderable.h"
-#include "Engine/ECS/Components/Camera.h"
-#include "Engine/Assets/AssetManager.h"
-#include "Engine/Assets/Model.h"
-#include "Engine/Rendering/RenderCommand.h"
-#include "Engine/Rendering/Shader.h"
+#include "Core/ECS/ECS.h"
+#include "Core/ECS/Components/Transform.h"
+#include "Core/ECS/Components/Renderable.h"
+#include "Core/ECS/Components/Camera.h"
+#include "Core/Assets/AssetManager.h"
+#include "Core/Assets/Model.h"
+#include "Core/Rendering/RenderCommand.h"
+#include "Core/Rendering/Shader.h"
 
 class RenderSystem : public System {
 public:

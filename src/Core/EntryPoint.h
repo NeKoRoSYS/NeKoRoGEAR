@@ -1,13 +1,14 @@
-#include <glad/glad.h>
-#include <SDL3/SDL.h>
+#pragma once
 #include <iostream>
+#include "Core/Components/Application.h"
 
-#include "Components/Application.h"
+extern Application* CreateAppliction();
 
 int main(int argc, char* argv[]) {
     try {
-        Application app;
-        app.Run();
+        auto app = CreateApplication();
+        app->Run();
+        delete app;
     } catch (const std::exception& e) {
         std::cerr << "Engine Fatal Error: " << e.what() << std::endl;
         return -1;

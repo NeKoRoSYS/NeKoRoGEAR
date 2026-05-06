@@ -7,6 +7,7 @@
 void DebugMenu::Init(SDL_Window* window, SDL_GLContext glContext) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImGui::GetIO().IniFilename = nullptr;
     ImGui::StyleColorsDark();
     ImGui_ImplSDL3_InitForOpenGL(window, glContext);
     ImGui_ImplOpenGL3_Init("#version 330 core");

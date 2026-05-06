@@ -1,6 +1,6 @@
 #pragma once
-#include "Engine/ECS/ECS.h"
-#include "Engine/ECS/Components/Transform.h"
+#include "Core/ECS/ECS.h"
+#include "Core/ECS/Components/Transform.h"
 
 class TransformSystem : public System {
 public:

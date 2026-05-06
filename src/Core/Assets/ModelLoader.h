@@ -2,10 +2,10 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "Engine/Rendering/Buffer.h"
-#include "Engine/Rendering/Mesh.h"
-#include "Engine/Assets/Model.h"
-#include "Engine/Assets/AssetManager.h"
+#include "Core/Rendering/Buffer.h"
+#include "Core/Rendering/Mesh.h"
+#include "Core/Assets/Model.h"
+#include "Core/Assets/AssetManager.h"
 #include <memory>
 #include <string>
 #include <vector>

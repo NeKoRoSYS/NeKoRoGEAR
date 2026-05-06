@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Rendering/Buffer.h"
+#include "Core/Rendering/Buffer.h"
 #include <vector>
 #include <cstdint>
 

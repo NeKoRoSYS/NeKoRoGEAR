@@ -10,10 +10,8 @@
 #include <bitset>
 #include <algorithm>
 
-// 1. Core Type Definitions
 using Entity = uint32_t;
 const Entity MAX_ENTITIES = 5000;
-
 const uint32_t MAX_COMPONENTS = 32;
 using ComponentTypeID = uint32_t;
 using Signature = std::bitset<MAX_COMPONENTS>;
@@ -29,22 +27,17 @@ inline ComponentTypeID GetComponentTypeID() {
     return typeID;
 }
 
-// 2. The Component Array Interface
-// We need a non-templated base class so the Registry can store a list of them
 class IComponentArray {
 public:
     virtual ~IComponentArray() = default;
     virtual void EntityDestroyed(Entity entity) = 0;
 };
 
-// 3. The Packed Component Array (The secret to Data-Oriented Design)
 template <typename T>
 class ComponentArray : public IComponentArray {
 private:
-    // The tightly packed continuous memory containing actual component data
     std::vector<T> componentArray;
 
-    // Initialize with -1 (or max size_t) to represent "no component"
     std::array<size_t, MAX_ENTITIES> entityToIndexArray; 
     std::array<Entity, MAX_ENTITIES> indexToEntityArray;
 
@@ -105,7 +98,6 @@ public:
     Signature signature;
 };
 
-// 4. The Registry (The Engine's Central Nervous System)
 class Registry {
 private:
     std::queue<Entity> availableEntities;

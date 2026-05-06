@@ -1,4 +1,4 @@
-#include "Engine/Rendering/RenderCommand.h"
+#include "Core/Rendering/RenderCommand.h"
 #include <glad/glad.h>
 
 void RenderCommand::Init() {

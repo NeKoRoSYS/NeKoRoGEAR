@@ -1,7 +1,7 @@
 #pragma once
-#include "Engine/ECS/ECS.h"
-#include "Engine/ECS/Components/Transform.h"
-#include "Engine/ECS/Components/Camera.h"
+#include "Core/ECS/ECS.h"
+#include "Core/ECS/Components/Transform.h"
+#include "Core/ECS/Components/Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 class CameraSystem : public System {

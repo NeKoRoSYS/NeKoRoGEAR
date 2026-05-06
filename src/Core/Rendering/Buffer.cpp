@@ -1,4 +1,3 @@
-// src/Engine/Rendering/Buffer.cpp
 #include "Buffer.h"
 #include "OpenGL/OpenGLBuffer.h"
 

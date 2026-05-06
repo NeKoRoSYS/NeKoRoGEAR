@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Assets/AssetManager.h"
+#include "Core/Assets/AssetManager.h"
 
 struct RenderComponent {
     AssetHandle modelHandle = INVALID_ASSET_HANDLE;

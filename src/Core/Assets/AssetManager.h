@@ -60,9 +60,9 @@ private:
     AssetHandle nextHandle = 0;
 };
 
-#include "Engine/Rendering/Buffer.h"
-#include "Engine/Rendering/Shader.h"
-#include "Engine/Rendering/Texture.h"
+#include "Core/Rendering/Buffer.h"
+#include "Core/Rendering/Shader.h"
+#include "Core/Rendering/Texture.h"
 #include "Model.h"
 
 class AssetManager {
