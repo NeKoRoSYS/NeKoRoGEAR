@@ -73,6 +73,8 @@ private:
 
     void BindInputs() {
         input.BindAction(InputAction::ToggleCameraMode, MouseButton::Right);
+        input.BindAxis(InputAxis::LookRight, MouseAxis::X,  1.0f);
+        input.BindAxis(InputAxis::LookUp,    MouseAxis::Y, -1.0f);
     }
 
 public:

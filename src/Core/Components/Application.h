@@ -23,7 +23,7 @@ class Application {
         Window window;
         Renderer renderer;
         DebugMenu debugMenu;
-        InputManager input = InputManager::Get();
+        InputManager& input;
         bool isRunning = true;
     private:
         void HandleEvents();

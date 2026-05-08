@@ -4,7 +4,7 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 
-Application::Application() : window("NeKoRoGEAR", 1280, 720), renderer(window) {
+Application::Application() : window("NeKoRoGEAR", 1280, 720), renderer(window), input(InputManager::Get()) {
     debugMenu.Init(window.GetNativeWindow(), window.glContext);
 }
 
