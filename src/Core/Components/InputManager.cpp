@@ -3,12 +3,32 @@
 
 static KeyCode MapSDLToEngineKey(SDL_Keycode key) {
     switch (key) {
-        case SDLK_W: return KeyCode::W;
         case SDLK_A: return KeyCode::A;
-        case SDLK_S: return KeyCode::S;
+        case SDLK_B: return KeyCode::B;
+        case SDLK_C: return KeyCode::C;
         case SDLK_D: return KeyCode::D;
-        case SDLK_Q: return KeyCode::Q;
         case SDLK_E: return KeyCode::E;
+        case SDLK_F: return KeyCode::F;
+        case SDLK_G: return KeyCode::G;
+        case SDLK_H: return KeyCode::H;
+        case SDLK_I: return KeyCode::I;
+        case SDLK_J: return KeyCode::J;
+        case SDLK_K: return KeyCode::K;
+        case SDLK_L: return KeyCode::L;
+        case SDLK_M: return KeyCode::M;
+        case SDLK_N: return KeyCode::N;
+        case SDLK_O: return KeyCode::O;
+        case SDLK_P: return KeyCode::P;
+        case SDLK_Q: return KeyCode::Q;
+        case SDLK_R: return KeyCode::R;
+        case SDLK_S: return KeyCode::S;
+        case SDLK_T: return KeyCode::T;
+        case SDLK_U: return KeyCode::U;
+        case SDLK_V: return KeyCode::V;
+        case SDLK_W: return KeyCode::W;
+        case SDLK_X: return KeyCode::X;
+        case SDLK_Y: return KeyCode::Y;
+        case SDLK_Z: return KeyCode::Z;
         case SDLK_SPACE: return KeyCode::Space;
         case SDLK_LSHIFT: return KeyCode::LShift;
         case SDLK_LCTRL: return KeyCode::LControl;
@@ -18,12 +38,32 @@ static KeyCode MapSDLToEngineKey(SDL_Keycode key) {
 
 static SDL_Scancode MapEngineKeyToSDL(KeyCode key) {
     switch (key) {
-        case KeyCode::W: return SDL_SCANCODE_W;
         case KeyCode::A: return SDL_SCANCODE_A;
-        case KeyCode::S: return SDL_SCANCODE_S;
+        case KeyCode::B: return SDL_SCANCODE_B;
+        case KeyCode::C: return SDL_SCANCODE_C;
         case KeyCode::D: return SDL_SCANCODE_D;
-        case KeyCode::Q: return SDL_SCANCODE_Q;
         case KeyCode::E: return SDL_SCANCODE_E;
+        case KeyCode::F: return SDL_SCANCODE_F;
+        case KeyCode::G: return SDL_SCANCODE_G;
+        case KeyCode::H: return SDL_SCANCODE_H;
+        case KeyCode::I: return SDL_SCANCODE_I;
+        case KeyCode::J: return SDL_SCANCODE_J;
+        case KeyCode::K: return SDL_SCANCODE_K;
+        case KeyCode::L: return SDL_SCANCODE_L;
+        case KeyCode::M: return SDL_SCANCODE_M;
+        case KeyCode::N: return SDL_SCANCODE_N;
+        case KeyCode::O: return SDL_SCANCODE_O;
+        case KeyCode::P: return SDL_SCANCODE_P;
+        case KeyCode::Q: return SDL_SCANCODE_Q;
+        case KeyCode::R: return SDL_SCANCODE_R;
+        case KeyCode::S: return SDL_SCANCODE_S;
+        case KeyCode::T: return SDL_SCANCODE_T;
+        case KeyCode::U: return SDL_SCANCODE_U;
+        case KeyCode::V: return SDL_SCANCODE_V;
+        case KeyCode::W: return SDL_SCANCODE_W;
+        case KeyCode::X: return SDL_SCANCODE_X;
+        case KeyCode::Y: return SDL_SCANCODE_Y;
+        case KeyCode::Z: return SDL_SCANCODE_Z;
         case KeyCode::Space: return SDL_SCANCODE_SPACE;
         case KeyCode::LShift: return SDL_SCANCODE_LSHIFT;
         case KeyCode::LControl: return SDL_SCANCODE_LCTRL;

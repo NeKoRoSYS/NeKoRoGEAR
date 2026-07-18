@@ -123,10 +123,6 @@ public:
         
         if (registry.HasComponent<TransformComponent>(modelEntity)) {
             auto& modelTransform = registry.GetComponent<TransformComponent>(modelEntity);
-            if (debugMenu.spinObject) {
-                modelTransform.rotation.x += 45.0f * deltaTime;
-                modelTransform.rotation.y += 45.0f * deltaTime;
-            }
         }
 
         transformSystem->Update(registry);

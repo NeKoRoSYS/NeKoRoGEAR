@@ -8,25 +8,25 @@
 #include "Core/Components/InputManager.h"
 
 class Application {
-    public:
-        Application();
-        ~Application();
-        void Run();
-        virtual void OnInit() {}
-        virtual void OnImGuiRender() {}
-        virtual void OnUpdate(float deltaTime) {}
-        virtual void OnRender() {}
-        virtual void OnShutdown() {}
-    protected:
-        Registry registry;
-        EventBus eventBus;
-        Window window;
-        Renderer renderer;
-        DebugMenu debugMenu;
-        InputManager& input;
-        bool isRunning = true;
-    private:
-        void HandleEvents();
+public:
+    Application();
+    ~Application();
+    void Run();
+    virtual void OnInit() {}
+    virtual void OnImGuiRender() {}
+    virtual void OnUpdate(float deltaTime) {}
+    virtual void OnRender() {}
+    virtual void OnShutdown() {}
+protected:
+    Registry registry;
+    EventBus eventBus;
+    Window window;
+    Renderer renderer;
+    DebugMenu debugMenu;
+    InputManager& input;
+    bool isRunning = true;
+private:
+    void HandleEvents();
 };
 
 Application* CreateApplication();
