@@ -1,6 +1,6 @@
 # NeKoRoGEAR
 
-Pronounced as "necro-gear." It is a generic general-purpose 3D game engine I made for personal use and is by no means professional or production-ready (yet)! Feel free to use as template or modify according to your liking.
+Pronounced as "necro-gear." It is a generic general-purpose 3D game engine I made for personal use and is by NO MEANS professional or production-ready (yet)! Feel free to use as template or modify according to your liking.
 <br>
 <br>
 
