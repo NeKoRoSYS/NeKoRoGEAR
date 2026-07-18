@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <iostream>
 #include <functional>
+#include <cstdint>
 
 using AssetHandle = uint32_t;
 constexpr AssetHandle INVALID_ASSET_HANDLE = 0;

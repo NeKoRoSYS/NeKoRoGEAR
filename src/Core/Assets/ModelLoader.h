@@ -17,12 +17,8 @@ public:
     static std::unique_ptr<Model> Load(const std::string& filepath) {
         Assimp::Importer importer;
         
-        // aiProcess_Triangulate: Forces all polygons to be triangles (OpenGL needs this).
-        // aiProcess_FlipUVs: Flips the Y-axis for textures, standard for OpenGL.
-        // aiProcess_GenSmoothNormals: Calculates normals if the artist forgot to export them.
         const aiScene* scene = importer.ReadFile(filepath, 
             aiProcess_Triangulate | 
-            /*aiProcess_FlipUVs | */
             aiProcess_GenSmoothNormals);
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
